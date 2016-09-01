@@ -4,6 +4,8 @@ import vizact
 import random
 import vizcam
 
+#test23
+
 #Start virtual world
 viz.go()
 
