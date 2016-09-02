@@ -41,13 +41,18 @@ for x in [-3,-2,-1,0]:
 		plant.setPosition([x,0,z])
 		plants.append(plant)
 		
-
 #Start the animation for the plants
-spin = vizact.spin(0,1,0,15)
+spin = vizact.spin(0,1,0,30)
+oldplant = None
 def spinPlant(plant):
-	plant.addAction(spin)
+	global oldplant
+	if oldplant:
+		oldplant.clearActions()
 
-vizact.ontimer2(3, 19, spinPlant, vizact.choice(plants))
+	plant.addAction(spin)
+	oldplant = plant
+
+vizact.ontimer(3, spinPlant, vizact.choice(plants))
 
 #Generate random pigeons
 pigeons = []
