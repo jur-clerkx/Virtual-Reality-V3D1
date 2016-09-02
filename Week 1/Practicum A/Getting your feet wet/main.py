@@ -3,6 +3,7 @@ import vizshape
 import vizact
 import random
 import vizcam
+import math
 
 #test23
 
@@ -92,3 +93,154 @@ def pigeonsFeed():
 		pigeon.addAction(pigeon_idle)
 
 vizact.onkeydown('p',pigeonsFeed)
+
+def createCube(size):
+	cube = viz.addGroup()
+	
+	#Bottom
+	viz.startLayer(viz.POLYGON)
+	viz.vertexColor(255, 0, 0)
+	viz.vertex(0,0,0)
+	viz.vertex(size, 0, 0)
+	viz.vertex(size, 0, size)
+	viz.vertex(0, 0, size)
+	viz.endLayer(parent = cube)
+	
+	#Front
+	viz.startLayer(viz.POLYGON)
+	viz.vertexColor(255, 0, 0)
+	viz.vertex(0,0,0)
+	viz.vertex(size, 0, 0)
+	viz.vertex(size, size, 0)
+	viz.vertex(0, size, 0)
+	viz.endlayer(parent = cube)
+	
+	#Right
+	viz.startLayer(viz.POLYGON)
+	viz.vertexColor(255, 0, 0)
+	viz.vertex(size, 0, 0)
+	viz.vertex(size, 0, size)
+	viz.vertex(size, size, size)
+	viz.vertex(size, size, 0)
+	viz.endlayer(parent = cube)
+	
+	#Left
+	viz.startLayer(viz.POLYGON)
+	viz.vertexColor(255, 0, 0)
+	viz.vertex(0, 0, 0)
+	viz.vertex(0, size, 0)
+	viz.vertex(0, size, size)
+	viz.vertex(0, 0, size)
+	viz.endlayer(parent = cube)
+	
+	#Back
+	viz.startLayer(viz.POLYGON)
+	viz.vertexColor(255, 0, 0)
+	viz.vertex(0, 0, size)
+	viz.vertex(0, size, size)
+	viz.vertex(size, size, size)
+	viz.vertex(size, 0, size)
+	viz.endlayer(parent = cube)
+	
+	#Top
+	viz.startLayer(viz.POLYGON)
+	viz.vertexColor(255, 0, 0)
+	viz.vertex(0, size, 0)
+	viz.vertex(size, size, 0)
+	viz.vertex(size, size, size)
+	viz.vertex(0, size, size)
+	viz.endlayer(parent = cube)
+	
+	cube.setPosition(2, 0, -5)
+	return cube
+
+
+def createCylinder(radius):
+	cylinder = viz.addGroup()
+	
+	detail = int(radius * 20)
+	angle = 360/detail;
+	
+	#Bottom
+	viz.startLayer(viz.POLYGON)
+	viz.vertexColor(viz.BLUE)
+	for i in range(detail):
+		x = radius * math.cos(((i*angle)*math.pi)/180)
+		y = radius * math.sin(((i*angle)*math.pi)/180)
+		viz.vertex(x,0,y)
+	viz.endLayer(parent=cylinder)
+	
+	#Top
+	viz.startLayer(viz.POLYGON)
+	viz.vertexColor(viz.BLUE)
+	for i in range(detail):
+		x = radius * math.cos(((i*angle)*math.pi)/180)
+		y = radius * math.sin(((i*angle)*math.pi)/180)
+		viz.vertex(x,1.5,y)
+	viz.endLayer(parent=cylinder)
+
+	#Sides
+	viz.startLayer(viz.QUADS)
+	viz.vertexColor(viz.BLUE)
+	for i in range(detail):
+		x = radius * math.cos(((i*angle)*math.pi)/180)
+		y = radius * math.sin(((i*angle)*math.pi)/180)
+		if i == 0:
+			viz.vertex(x,0,y)
+			viz.vertex(x,1.5,y)
+		elif i % 2 == 0:
+			viz.vertex(x,0,y)
+			viz.vertex(x,1.5,y)
+			viz.vertex(x,0,y)
+			viz.vertex(x,1.5,y)
+		else:
+			viz.vertex(x,1.5,y)
+			viz.vertex(x,0,y)
+			viz.vertex(x,1.5,y)
+			viz.vertex(x,0,y)
+	
+	viz.endLayer(parent=cylinder)
+	cylinder.setPosition(0, 0, -5)
+	return cylinder
+
+#Vars for scaling
+selectedShape = 0
+cubeSize = 1
+cylinderSize = 1
+
+#Create shapes
+cylinder = createCylinder(1.2)
+cube = createCube(1)
+
+def selectShape(shape):
+	global selectedShape
+	if selectedShape == shape:
+		selectedShape = 0
+	else:
+		selectedShape = shape
+
+def sizeShape(expand):
+	global selectedShape
+	
+	if selectedShape == 1:
+		global cube
+		global cubeSize
+		if expand:
+			cubeSize = cubeSize + 0.1
+		else:
+			cubeSize = cubeSize - 0.1
+		cube.scale(cubeSize, cubeSize, cubeSize)
+	if selectedShape == 2:
+		global cylinder
+		global cylinderSize
+		if expand:
+			cylinderSize = cylinderSize + 0.1
+		else:
+			cylinderSize = cylinderSize - 0.1
+		cylinder.scale(cylinderSize, cylinderSize, cylinderSize)
+
+vizact.onkeydown('1',selectShape, 1)
+vizact.onkeydown('2',selectShape, 2)
+
+vizact.onkeydown(viz.KEY_DOWN, sizeShape, False)
+vizact.onkeydown(viz.KEY_UP, sizeShape, True)
