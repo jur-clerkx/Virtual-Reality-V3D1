@@ -5,8 +5,6 @@ import random
 import vizcam
 import math
 
-#test23
-
 #Start virtual world
 viz.go()
 
@@ -14,7 +12,6 @@ viz.go()
 viz.collision(viz.ON)
 viz.setMultiSample(4)
 viz.MainWindow.fov(60)
-#vizshape.addAxes()
 
 viz.MainView.move([0, 0 ,-10])
 viz.MainView.setEuler([0, 0, 0])
@@ -23,9 +20,9 @@ viz.MainView.setEuler([0, 0, 0])
 piazza = viz.addChild('piazza.osgb')
 
 #Objects
-chair = viz.addChild('Models/chair.dae')
+chair = viz.addChild('models/chair.dae')
 chair.setPosition(0,0,-9)
-chair.scale(20,20,20)
+chair.scale(17,17,17)
 
 #male avatar
 male = viz.addAvatar('vcc_male.cfg')
@@ -59,6 +56,7 @@ def spinPlant(plant):
 	oldplant = plant
 
 vizact.ontimer(3, spinPlant, vizact.choice(plants))
+
 
 #Generate random pigeons
 pigeons = []
@@ -204,6 +202,15 @@ def createCylinder(radius):
 			viz.vertex(x,1.5,y)
 			viz.vertex(x,0,y)
 	
+	x = radius * math.cos(((0*angle)*math.pi)/180)
+	y = radius * math.sin(((0*angle)*math.pi)/180)
+	if (detail - 1) % 2 == 1:
+		viz.vertex(x,0,y)
+		viz.vertex(x,1.5,y)
+	else:
+		viz.vertex(x,1.5,y)
+		viz.vertex(x,0,y)
+	
 	viz.endLayer(parent=cylinder)
 	cylinder.setPosition(0, 0, -5)
 	return cylinder
@@ -217,6 +224,7 @@ cylinderSize = 1
 cylinder = createCylinder(1.2)
 cube = createCube(1)
 
+#Selection of the shapes
 def selectShape(shape):
 	global selectedShape
 	if selectedShape == shape:
@@ -224,6 +232,7 @@ def selectShape(shape):
 	else:
 		selectedShape = shape
 
+#Sizing of the shapes
 def sizeShape(expand):
 	global selectedShape
 	
@@ -244,8 +253,19 @@ def sizeShape(expand):
 			cylinderSize = cylinderSize - 0.1
 		cylinder.scale(cylinderSize, cylinderSize, cylinderSize)
 
+#Set callbacks for selection keys
 vizact.onkeydown('1',selectShape, 1)
 vizact.onkeydown('2',selectShape, 2)
-
+#Set callbacks for size keys
 vizact.onkeydown(viz.KEY_DOWN, sizeShape, False)
 vizact.onkeydown(viz.KEY_UP, sizeShape, True)
+
+seat = chair.getChild('seat001', viz.CHILD_REPLACE_TRANSFORM)
+#frame = chair.getChild('chair')
+#frame.addAction(spin)
+
+#Seatspinning
+def seatspinning():
+	seat.setEuler([15 * viz.elapsed(), 0, 0], viz.ABS_LOCAL)
+
+vizact.ontimer(0, seatspinning)
