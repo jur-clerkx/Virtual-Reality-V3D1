@@ -22,6 +22,11 @@ viz.MainView.setEuler([0, 0, 0])
 #Map
 piazza = viz.addChild('piazza.osgb')
 
+#Objects
+chair = viz.addChild('Models/chair.dae')
+chair.setPosition(0,0,-9)
+chair.scale(20,20,20)
+
 #male avatar
 male = viz.addAvatar('vcc_male.cfg')
 male.setPosition([4.5, 0, 7])
