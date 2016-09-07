@@ -6,7 +6,7 @@ import vizcam
 import math
 
 #Start virtual world
-viz.go()
+viz.go(viz.FULLSCREEN)
 
 #Add subwindow
 BirdEyeWindow = viz.addWindow()
@@ -180,6 +180,8 @@ def createCylinder(radius):
 	cylinder = viz.addGroup()
 	
 	detail = int(radius * 20)
+	if detail < 10:
+		detail = 10
 	angle = 360/detail;
 	
 	#Bottom
@@ -278,6 +280,7 @@ vizact.onkeydown('2',selectShape, 2)
 vizact.onkeydown(viz.KEY_KP_ADD, sizeShape, True)
 vizact.onkeydown(viz.KEY_KP_SUBTRACT, sizeShape, False)
 
+####Get child with local transformations
 seat = chair.getChild('seat001', viz.CHILD_REPLACE_TRANSFORM)
 
 #Seatspinning
@@ -298,3 +301,42 @@ def updateMovement():
 		view.setEuler([-TURN_SPEED*viz.elapsed(),0,0],viz.BODY_ORI,viz.REL_PARENT)
 
 vizact.ontimer(0,updateMovement)
+
+#########################CREATE ROBOT################################
+#Create body
+body = createCube(1)
+body.scale(0.8, 1, 0.5)
+body.setPosition(3,0.8,-10)
+
+#Create legs
+leg1 = createCylinder(0.2)
+leg1.scale(1, 0.533, 1)
+leg1.setParent(body)
+leg1.setPosition(0.2,-0.8, 0.4)
+leg2 = createCylinder(0.2)
+leg2.scale(1, 0.533, 1)
+leg2.setParent(body)
+leg2.setPosition(0.8,-0.8, 0.4)
+
+#Create arms
+arm1 = createCylinder(0.2)
+arm1.scale(1, 0.533, 1)
+arm1.setParent(body)
+arm1.setPosition(0, 1, 0.4)
+arm2 = createCylinder(0.2)
+arm2.scale(1, 0.533, 1)
+arm2.setParent(body)
+arm2.setPosition(1, 1, 0.4)
+
+#Create head
+head = createCylinder(0.4)
+head.scale(1, 0.2, 1)
+head.setParent(body)
+head.setPosition(0.5, 1, 0.4)
+
+def helicopterArms():
+	arm1.setEuler([0,60*viz.elapsed(),0], viz.REL_LOCAL)
+	arm2.setEuler([0,-35*viz.elapsed(),0], viz.REL_LOCAL)
+	print 'test'
+
+vizact.ontimer(0, helicopterArms)
