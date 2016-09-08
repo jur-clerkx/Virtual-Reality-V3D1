@@ -22,8 +22,6 @@ viewLink.preTrans([0, 15, 0])
 viewLink.preEuler([0,90,0])
 
 #Set configuration
-viz.mouse(viz.OFF)
-viz.mouse.setVisible(False)
 viz.collision(viz.ON)
 viz.setMultiSample(4)
 viz.MainWindow.fov(60)
@@ -307,36 +305,58 @@ vizact.ontimer(0,updateMovement)
 body = createCube(1)
 body.scale(0.8, 1, 0.5)
 body.setPosition(3,0.8,-10)
+body.name = "erik_body"
 
 #Create legs
 leg1 = createCylinder(0.2)
 leg1.scale(1, 0.533, 1)
 leg1.setParent(body)
 leg1.setPosition(0.2,-0.8, 0.4)
+leg1.name = "erik_leg1"
 leg2 = createCylinder(0.2)
 leg2.scale(1, 0.533, 1)
 leg2.setParent(body)
 leg2.setPosition(0.8,-0.8, 0.4)
+leg2.name = "erik_leg2"
 
 #Create arms
 arm1 = createCylinder(0.2)
 arm1.scale(1, 0.533, 1)
 arm1.setParent(body)
 arm1.setPosition(0, 1, 0.4)
+arm1.name = "erik_arm1"
 arm2 = createCylinder(0.2)
 arm2.scale(1, 0.533, 1)
 arm2.setParent(body)
 arm2.setPosition(1, 1, 0.4)
+arm2.name = "erik_arm2"
 
 #Create head
 head = createCylinder(0.4)
 head.scale(1, 0.2, 1)
 head.setParent(body)
 head.setPosition(0.5, 1, 0.4)
+head.name = "erik_head"
 
 def helicopterArms():
 	arm1.setEuler([0,60*viz.elapsed(),0], viz.REL_LOCAL)
 	arm2.setEuler([0,-35*viz.elapsed(),0], viz.REL_LOCAL)
-	print 'test'
 
 vizact.ontimer(0, helicopterArms)
+
+#Screen text
+textScreen = viz.addText('Screen Text',viz.SCREEN)
+textScreen.alignment(viz.ALIGN_RIGHT_BOTTOM)
+textScreen.setPosition([0.95,0.05,0])
+
+textScreen.message('')
+def updateScreenText():
+    object = viz.MainWindow.pick(info=True)
+    if object.valid:
+        name = object.name
+        if name.startswith('erik_') or True:
+            textScreen.message(name)
+        else:
+            textScreen.message('')
+
+vizact.ontimer(0.1,updateScreenText)
