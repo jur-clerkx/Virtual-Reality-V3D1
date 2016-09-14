@@ -33,7 +33,7 @@ moveInSquare = vizact.sequence(moveForward,turnRight,16)
 #Lights
 #Headlight
 headLight = viz.MainView.getHeadLight()
-#headLight.disable()
+headLight.disable()
 
 #Directional
 directionalLamp = viz.addChild('object 1.fbx')
@@ -44,7 +44,7 @@ directional = viz.addLight()
 directional.setPosition(-4,5,0)
 directional.setEuler(90,0,0)
 directional.color(10,0,0)
-directional.disable()
+#directional.disable()
 
 #Point
 pointLamp = viz.addChild('object 2.fbx')
