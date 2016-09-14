@@ -5,19 +5,8 @@ import vizact
 viz.setMultiSample(4)
 viz.fov(60)
 viz.clearcolor (viz.BLACK)
-viz.collision(viz.ON)
 
 viz.go (viz.FULLSCREEN)
-
-#GUI
-button = viz.addButton()
-button.setPosition(.8,.2)
-
-check = viz.add(viz.CHECKBOX)
-
-#The checkbox will control if collision is enabled
-vizact.onbuttondown(check,viz.collision,viz.ON)
-vizact.onbuttonup(check,viz.collision,viz.OFF)
 
 #Movement
 tracker = vizcam.addWalkNavigate(moveScale=2.0)
@@ -46,6 +35,7 @@ directional.setEuler(90,0,0)
 directional.color(10,0,0)
 #directional.disable()
 
+
 #Point
 pointLamp = viz.addChild('object 2.fbx')
 pointLamp.setPosition(-12,1,4)
@@ -56,7 +46,7 @@ point.position(-12,1,4)
 point.spread(180)
 point.intensity(1)
 point.color(0,10,0)
-point.disable()
+#point.disable()
 
 #Spot
 spotLamp = viz.addChild('object 3.fbx')
@@ -71,7 +61,7 @@ spot.intensity(1)
 spot.spotexponent(2)
 spot.setPosition(0,1,0)
 spot.color(0,0,10)
-spot.disable()
+#spot.disable()
 
 #Mover
 mover = viz.addLight()
@@ -83,7 +73,7 @@ moverLamp.setPosition(6,4,-8)
 moverLamp.setScale(0.02,0.02,0.02)
 moverLamp.color(255,255,255)
 vizact.onkeydown(' ',moverLamp.addAction, moveInSquare)
-mover.disable()
+#mover.disable()
 
 #Map
 viz.addChild('ground.osgb')
@@ -120,3 +110,115 @@ vorm5 = viz.addChild('object 5.fbx')
 vorm5.setScale(0.1,0.1,0.1)
 vorm5.setPosition(-4,0,10)
 vorm5.emissive(0,0,255)
+
+#Toggle directional light event method
+def toggleDirectional(*args, **kw):
+	if args[1]:
+		if directional.getEnabled():
+			directional.disable()
+		else:
+			directional.enable()
+			
+#Toggle moving light event method
+def toggleMover(*args, **kw):
+	if args[1]:
+		if mover.getEnabled():
+			mover.disable()
+		else:
+			mover.enable()
+
+#Toggle spot light event method
+def toggleSpot(*args, **kw):
+	if args[1]:
+		if spot.getEnabled():
+			spot.disable()
+		else:
+			spot.enable()
+
+#Toggle point light event method
+def togglePoint(*args, **kw):
+	if args[1]:
+		if point.getEnabled():
+			point.disable()
+		else:
+			point.enable()
+
+#GUI
+buttonDir = viz.addButtonLabel('Toggle directional')
+buttonDir.setPosition(.1,.9)
+buttonDir.addEventCallback(viz.BUTTON_EVENT, toggleDirectional)
+
+buttonSpot = viz.addButtonLabel('Toggle spotlight')
+buttonSpot.setPosition(.1,.85)
+buttonSpot.addEventCallback(viz.BUTTON_EVENT, toggleSpot)
+
+buttonMover = viz.addButtonLabel('Toggle moving light')
+buttonMover.setPosition(.1,.8)
+buttonMover.addEventCallback(viz.BUTTON_EVENT, toggleMover)
+
+buttonPoint = viz.addButtonLabel('Toggle point light')
+buttonPoint.setPosition(.1,.75)
+buttonPoint.addEventCallback(viz.BUTTON_EVENT, togglePoint)
+
+
+check = viz.add(viz.CHECKBOX)
+check.setPosition(.1, .7)
+
+#The checkbox will control if collision is enabled
+vizact.onbuttondown(check,viz.collision,viz.ON)
+vizact.onbuttonup(check,viz.collision,viz.OFF)
+
+def createCube(size):
+	#Bottom
+	viz.startLayer(viz.POLYGON)
+	viz.vertexColor(255, 0, 0)
+	viz.vertex(0,0,0)
+	viz.vertex(size, 0, 0)
+	viz.vertex(size, 0, size)
+	viz.vertex(0, 0, size)
+	
+	#Front
+	viz.startLayer(viz.POLYGON)
+	viz.vertexColor(255, 0, 0)
+	viz.vertex(0,0,0)
+	viz.vertex(size, 0, 0)
+	viz.vertex(size, size, 0)
+	viz.vertex(0, size, 0)
+	
+	#Right
+	viz.startLayer(viz.POLYGON)
+	viz.vertexColor(255, 0, 0)
+	viz.vertex(size, 0, 0)
+	viz.vertex(size, 0, size)
+	viz.vertex(size, size, size)
+	viz.vertex(size, size, 0)
+	
+	#Left
+	viz.startLayer(viz.POLYGON)
+	viz.vertexColor(255, 0, 0)
+	viz.vertex(0, 0, 0)
+	viz.vertex(0, size, 0)
+	viz.vertex(0, size, size)
+	viz.vertex(0, 0, size)
+	
+	#Back
+	viz.startLayer(viz.POLYGON)
+	viz.vertexColor(255, 0, 0)
+	viz.vertex(0, 0, size)
+	viz.vertex(0, size, size)
+	viz.vertex(size, size, size)
+	viz.vertex(size, 0, size)
+	
+	#Top
+	viz.startLayer(viz.POLYGON)
+	viz.vertexColor(255, 0, 0)
+	viz.vertex(0, size, 0)
+	viz.vertex(size, size, 0)
+	viz.vertex(size, size, size)
+	viz.vertex(0, size, size)
+	cube = viz.endlayer()
+	
+	cube.setPosition(0, 0, -5)
+	return cube
+
+cube = createCube(3)
