@@ -8,61 +8,29 @@ vizconnect.go('vizconnect_config.py')
 viz.setMultiSample(8)
 
 viz.mouse.setVisible(False)
+viz.clearcolor(viz.BLUE)
 
 ultraStage = viz.add('model.dae')
 ultraStage.scale(7,7,7)
-ultraStage.setPosition(0,-4.2,5)
+ultraStage.setPosition(5,0,20)
 
-#Set on collission
-viz.MainView.collision(viz.ON)
-viz.MainView.gravity(10)
+head_tracker = vizconnect.getTracker('rift_with_mouse_and_keyboard').getNode3d()
 
-#Light settings
+#Setup lightning
 headLight = viz.MainView.getHeadLight() 
-headLight.disable() 
+headLight.disable()
 myLight = viz.addLight() 
-myLight.setEuler( 0, 20 ,0 )
+myLight.setEuler(-15 ,15 ,15)
 
 #Music
 backgroundsong = viz.addAudio('audio/01. Ummet Ozcan vs. The Aston Shuffle vs. Bassjackers & REEZ & KSHMR - Lost In Savior (G-Bæss & Mike Destiny Edit).wav')
 backgroundsong.play()
 
-def showLocation():
-	print viz.MainView.getPosition()
+def up():
+	head_tracker.translate([0,0.5,0])
 
-#Front right
-for i in range(35):
-	#Generate random positions
-	x = random.randint(4, 20) * -1
-	z = random.randint(8, 25) * -1
-	yaw = random.randint(-30, 70)
-	animation = random.randint(3,5)
-	
-	#Load a pigeon
-	pigeon = viz.addAvatar('vcc_male.cfg')
-	
-	#Set the position
-	pigeon.setPosition([x, -4.2, z])
-	pigeon.setEuler([yaw, 0, 0])
-	pigeon.state(animation)
-	
+def down():
+	head_tracker.translate([0, -0.5, 0])
 
-#Front left
-for i in range(35):
-	#Generate random positions
-	x = random.randint(4, 20)
-	z = random.randint(8, 25) * -1
-	yaw = random.randint(-70, 30)
-	animation = random.randint(3,5)
-	
-	#Load a pigeon
-	pigeon = viz.addAvatar('vcc_male.cfg')
-	
-	#Set the position
-	pigeon.setPosition([x, -4.2, z])
-	pigeon.setEuler([yaw, 0, 0])
-	pigeon.state(animation)
-
-
-vizact.ontimer(1, showLocation)
-
+vizact.onkeydown(' ', up)
+vizact.onkeydown(viz.KEY_CONTROL_L, down)
