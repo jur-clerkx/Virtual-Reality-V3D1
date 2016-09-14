@@ -17,7 +17,7 @@ headLight.disable(False)
 tracker = vizcam.addWalkNavigate(moveScale=2.0)
 tracker.setPosition([0,1.8,0])
 viz.link(tracker,viz.MainView)
-#viz.mouse.setVisible(False)
+viz.mouse.setVisible(False)
 
 #Map
 viz.addChild('ground.osgb')
@@ -54,3 +54,167 @@ vorm5 = viz.addChild('object 5.fbx')
 vorm5.setScale(0.1,0.1,0.1)
 vorm5.setPosition(-4,0,10)
 vorm5.emissive(0,0,255)
+
+#Create cube method
+def createCube(size):
+	#Bottom
+	viz.startLayer(viz.POLYGON)
+	viz.texCoord(0.0, 0.0)
+	viz.vertex(0,0,0)
+	viz.texCoord(1.0, 0.0)
+	viz.vertex(size, 0, 0)
+	viz.texCoord(1.0, 1.0)
+	viz.vertex(size, 0, size)
+	viz.texCoord(0.0, 1.0)
+	viz.vertex(0, 0, size)
+	
+	#Front
+	viz.startLayer(viz.POLYGON)
+	viz.texCoord(0.0, 0.0)
+	viz.vertex(0,0,0)
+	viz.texCoord(1.0, 0.0)
+	viz.vertex(size, 0, 0)
+	viz.texCoord(1.0, 1.0)
+	viz.vertex(size, size, 0)
+	viz.texCoord(0.0, 1.0)
+	viz.vertex(0, size, 0)
+	
+	#Right
+	viz.startLayer(viz.POLYGON)
+	viz.texCoord(0.0, 0.0)
+	viz.vertex(size, 0, 0)
+	viz.texCoord(1.0, 0.0)
+	viz.vertex(size, 0, size)
+	viz.texCoord(1.0, 1.0)
+	viz.vertex(size, size, size)
+	viz.texCoord(0.0, 1.0)
+	viz.vertex(size, size, 0)
+	
+	#Left
+	viz.startLayer(viz.POLYGON)
+	viz.texCoord(0.0, 0.0)
+	viz.vertex(0, 0, 0)
+	viz.texCoord(0.0, 1.0)
+	viz.vertex(0, size, 0)
+	viz.texCoord(1.0, 1.0)
+	viz.vertex(0, size, size)
+	viz.texCoord(1.0, 0.0)
+	viz.vertex(0, 0, size)
+	
+	#Back
+	viz.startLayer(viz.POLYGON)
+	viz.texCoord(0.0, 0.0)
+	viz.vertex(0, 0, size)
+	viz.texCoord(0.0, 1.0)
+	viz.vertex(0, size, size)
+	viz.texCoord(1.0, 1.0)
+	viz.vertex(size, size, size)
+	viz.texCoord(1.0, 0.0)
+	viz.vertex(size, 0, size)
+	
+	#Top
+	viz.startLayer(viz.POLYGON)
+	viz.texCoord(0.0, 0.0)
+	viz.vertex(0, size, 0)
+	viz.texCoord(1.0, 0.0)
+	viz.vertex(size, size, 0)
+	viz.texCoord(1.0, 1.0)
+	viz.vertex(size, size, size)
+	viz.texCoord(0.0, 1.0)
+	viz.vertex(0, size, size)
+	cube = viz.endlayer()
+	
+	return cube
+
+#Create dice cube method
+def createDiceCube(size):
+	#Bottom
+	viz.startLayer(viz.POLYGON)
+	viz.texCoord(0.0, 0.5)
+	viz.vertex(0,0,0)
+	viz.texCoord(0.333, 0.5)
+	viz.vertex(size, 0, 0)
+	viz.texCoord(0.333, 1)
+	viz.vertex(size, 0, size)
+	viz.texCoord(0.0, 1)
+	viz.vertex(0, 0, size)
+	
+	#Front
+	viz.startLayer(viz.POLYGON)
+	viz.texCoord(0.0, 0.0)
+	viz.vertex(0,0,0)
+	viz.texCoord(0.3, 0.0)
+	viz.vertex(size, 0, 0)
+	viz.texCoord(0.3, 0.5)
+	viz.vertex(size, size, 0)
+	viz.texCoord(0.0, 0.5)
+	viz.vertex(0, size, 0)
+	
+	#Right
+	viz.startLayer(viz.POLYGON)
+	viz.texCoord(0.333, 0.0)
+	viz.vertex(size, 0, 0)
+	viz.texCoord(0.666, 0.0)
+	viz.vertex(size, 0, size)
+	viz.texCoord(0.666, 0.5)
+	viz.vertex(size, size, size)
+	viz.texCoord(0.333, 0.5)
+	viz.vertex(size, size, 0)
+	
+	#Left
+	viz.startLayer(viz.POLYGON)
+	viz.texCoord(0.333, 0.5)
+	viz.vertex(0, 0, 0)
+	viz.texCoord(0.333, 1.0)
+	viz.vertex(0, size, 0)
+	viz.texCoord(0.666, 1.0)
+	viz.vertex(0, size, size)
+	viz.texCoord(0.666, 0.5)
+	viz.vertex(0, 0, size)
+	
+	#Back
+	viz.startLayer(viz.POLYGON)
+	viz.texCoord(0.666, 0.5)
+	viz.vertex(0, 0, size)
+	viz.texCoord(0.666, 1.0)
+	viz.vertex(0, size, size)
+	viz.texCoord(1.0, 1.0)
+	viz.vertex(size, size, size)
+	viz.texCoord(1.0, 0.5)
+	viz.vertex(size, 0, size)
+	
+	#Top
+	viz.startLayer(viz.POLYGON)
+	viz.texCoord(0.666, 0.0)
+	viz.vertex(0, size, 0)
+	viz.texCoord(1, 0.0)
+	viz.vertex(size, size, 0)
+	viz.texCoord(1, 0.5)
+	viz.vertex(size, size, size)
+	viz.texCoord(0.666, 0.5)
+	viz.vertex(0, size, size)
+	cube = viz.endlayer()
+	
+	return cube
+
+#Create the cube
+cube = createCube(1)
+cube.setPosition(0, .5, -5)
+
+#load the texture
+bricks = viz.addTexture('brick.jpg')
+bricks.wrap(viz.WRAP_T, viz.REPEAT)
+bricks.wrap(viz.WRAP_S, viz.REPEAT)
+
+#Put texture on cube
+cube.texture(bricks)
+
+#Load dice texure
+dice = viz.addTexture('dice.jpg')
+bricks.wrap(viz.WRAP_T, viz.REPEAT)
+bricks.wrap(viz.WRAP_S, viz.REPEAT)
+
+#Create the dice
+diceCube = createDiceCube(1)
+diceCube.texture(dice)
+diceCube.setPosition(-3, .5, -5)
