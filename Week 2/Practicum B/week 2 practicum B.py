@@ -22,38 +22,38 @@ viz.mouse.setVisible(False)
 #Map
 viz.addChild('ground.osgb')
 
+#Load picture
+pic1 = viz.addTexture('texture1.jpg')
+pic2 = viz.addTexture('texture2.jpg')
+pic3 = viz.addTexture('texture3.jpg')
+
 #Objects
 #aanbeeld
 vorm1 = viz.addChild('object 1.fbx')
 vorm1.setScale(0.1,0.1,0.1)
 vorm1.setPosition(0,0,5)
-vorm1.color(255,255,255)
+vorm1.texture(pic1)
 
 #kubus
 vorm2 = viz.addChild('object 2.fbx')
 vorm2.setScale(0.1,0.1,0.1)
 vorm2.setPosition(0,0,10)
-vorm2.color(0,255,0)
+
 
 #bol
 vorm3 = viz.addChild('object 3.fbx')
 vorm3.setScale(0.1,0.1,0.1)
 vorm3.setPosition(4,0,5)
-vorm3.color(255,0,0)
 
 #cilinder
 vorm4 = viz.addChild('object 4.fbx')
 vorm4.setScale(0.1,0.1,0.1)
 vorm4.setPosition(8,0,-6)
-vorm4.color(255,0,0)
-vorm4.specular(0,255,0)
-vorm4.shininess(100)
 
 #pyramide
 vorm5 = viz.addChild('object 5.fbx')
 vorm5.setScale(0.1,0.1,0.1)
 vorm5.setPosition(-4,0,10)
-vorm5.emissive(0,0,255)
 
 #Create cube method
 def createCube(size):
