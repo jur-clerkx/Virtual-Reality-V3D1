@@ -29,7 +29,7 @@ pic1 = viz.addTexture('texture1.jpg')
 #steen
 pic2 = viz.addTexture('texture2.jpg')
 pic2.wrap(viz.WRAP_T, viz.CLAMP_TO_BORDER)
-pic2.wrap(viz.WRAP_S, viz.MIRROR)
+pic2.wrap(viz.WRAP_S, viz.CLAMP_TO_BORDER)
 
 #tegel
 pic3 = viz.addTexture('texture3.jpg')
@@ -42,6 +42,10 @@ vorm1 = viz.addChild('object 2.fbx')
 vorm1.setScale(0.1,0.1,0.1)
 vorm1.setPosition(0,0,5)
 vorm1.texture(pic1)
+matrix1 = vizmat.Transform()
+matrix1.setScale(1.5,1.5,1)
+matrix1.setTrans([-.25,-.25,1])
+vorm1.texmat(matrix1)
 
 #kubus2
 vorm2 = viz.addChild('object 2.fbx')

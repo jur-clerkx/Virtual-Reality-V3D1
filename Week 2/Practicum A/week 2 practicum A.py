@@ -25,14 +25,9 @@ headLight = viz.MainView.getHeadLight()
 headLight.disable()
 
 #Directional
-directionalLamp = viz.addChild('object 1.fbx')
-directionalLamp.setPosition(-4,5,0)
-directionalLamp.setScale(0.02,0.02,0.02)
-directionalLamp.color(255,255,255)
 directional = viz.addLight()
-directional.setPosition(-4,5,0)
 directional.setEuler(90,0,0)
-directional.color(10,0,0)
+directional.color(.9,0,0)
 #directional.disable()
 
 
@@ -45,14 +40,14 @@ point = viz.addLight()
 point.position(-12,1,4)
 point.spread(180)
 point.intensity(1)
-point.color(0,10,0)
+point.color(0,0.4,0)
 #point.disable()
 
 #Spot
 spotLamp = viz.addChild('object 3.fbx')
 spotLamp.setPosition(0,0,0)
 spotLamp.setScale(0.02,0.02,0.02)
-spotLamp.color(255,255,255)
+spotLamp.color(1,0,0)
 spot = viz.addLight()
 spot.position(0,0,0)
 spot.direction(0,0,1)
@@ -66,12 +61,12 @@ spot.color(0,0,10)
 #Mover
 mover = viz.addLight()
 mover.setPosition(6,4,-8)
-mover.color(10,0,10)
+mover.color(.5,0,.5)
 vizact.onkeydown(' ',mover.addAction, moveInSquare)
 moverLamp = viz.addChild('object 4.fbx')
 moverLamp.setPosition(6,4,-8)
 moverLamp.setScale(0.02,0.02,0.02)
-moverLamp.color(255,255,255)
+moverLamp.color(1,1,1)
 vizact.onkeydown(' ',moverLamp.addAction, moveInSquare)
 #mover.disable()
 
@@ -83,33 +78,33 @@ viz.addChild('ground.osgb')
 vorm1 = viz.addChild('object 1.fbx')
 vorm1.setScale(0.1,0.1,0.1)
 vorm1.setPosition(0,0,5)
-vorm1.color(255,255,255)
+vorm1.color(1,1,1)
 
 #kubus
 vorm2 = viz.addChild('object 2.fbx')
 vorm2.setScale(0.1,0.1,0.1)
 vorm2.setPosition(0,0,10)
-vorm2.color(0,255,0)
+vorm2.color(0,1,0)
 
 #bol
 vorm3 = viz.addChild('object 3.fbx')
 vorm3.setScale(0.1,0.1,0.1)
 vorm3.setPosition(4,0,5)
-vorm3.color(255,0,0)
+vorm3.color(1,0,0)
 
 #cilinder
 vorm4 = viz.addChild('object 4.fbx')
 vorm4.setScale(0.1,0.1,0.1)
 vorm4.setPosition(8,0,-6)
 vorm4.color(255,0,0)
-vorm4.specular(0,255,0)
+vorm4.specular(0,1,0)
 vorm4.shininess(100)
 
 #pyramide
 vorm5 = viz.addChild('object 5.fbx')
 vorm5.setScale(0.1,0.1,0.1)
 vorm5.setPosition(-4,0,10)
-vorm5.emissive(0,0,255)
+vorm5.emissive(0,0,1)
 
 #Toggle directional light event method
 def toggleDirectional(*args, **kw):
@@ -143,6 +138,14 @@ def togglePoint(*args, **kw):
 		else:
 			point.enable()
 
+#Toggle Headlight light event method
+def toggleHeadlight(*args, **kw):
+	if args[1]:
+		if headLight.getEnabled():
+			headLight.disable()
+		else:
+			headLight.enable()
+
 #GUI
 buttonDir = viz.addButtonLabel('Toggle directional')
 buttonDir.setPosition(.1,.9)
@@ -160,9 +163,13 @@ buttonPoint = viz.addButtonLabel('Toggle point light')
 buttonPoint.setPosition(.1,.75)
 buttonPoint.addEventCallback(viz.BUTTON_EVENT, togglePoint)
 
+buttonPoint = viz.addButtonLabel('Toggle head light')
+buttonPoint.setPosition(.1,.7)
+buttonPoint.addEventCallback(viz.BUTTON_EVENT, toggleHeadlight)
+
 
 check = viz.add(viz.CHECKBOX)
-check.setPosition(.1, .7)
+check.setPosition(.1, .65)
 
 #The checkbox will control if collision is enabled
 vizact.onbuttondown(check,viz.collision,viz.ON)
