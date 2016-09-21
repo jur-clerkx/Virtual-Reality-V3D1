@@ -10,7 +10,8 @@ viz.fov(60)
 #viz.clearcolor (viz.SKYBLUE)
 viz.collision(viz.ON)
 
-viz.move(0,0,-10)
+#ACTS
+spin = vizact.spin(0,1,0,15)
 
 #START VIRUTAL WORLD
 viz.go (viz.FULLSCREEN)
@@ -57,7 +58,18 @@ kubus.billboard()
 #particles
 fire = viz.add('fire.osg',pos=[3,1.8,2])
 fire.hasparticles()
+
 fire2 = viz.add('fire2.osg',pos=[0,1.8,2])
 fire2.hasparticles()
-oefenparticle = viz.add('oefen_particle.osg',pos=[5,0,-6])
-oefenparticle.hasparticles()
+
+mist = viz.add('rode_mist.osg',pos=[5,0,-6])
+mist.hasparticles()
+
+fontein = viz.add('vuurwerk_fontein.osg',pos=[-6,0,-8])
+fontein.hasparticles()
+
+laser = viz.add('laser.osg',pos=[-8,0,8])
+laser.hasparticles()
+laser.addAction(spin)
+
+
