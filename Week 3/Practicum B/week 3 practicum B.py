@@ -55,5 +55,7 @@ kubus.color(0,.3,0)
 kubus.billboard()
 
 #particles
-fire = viz.add('fire2.osg',pos=[0,1.8,2])
+fire = viz.add('fire.osg',pos=[3,1.8,2])
 fire.hasparticles()
+fire2 = viz.add('fire2.osg',pos=[0,1.8,2])
+fire2.hasparticles()
