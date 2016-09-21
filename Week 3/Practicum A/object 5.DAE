@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8"?>
+<COLLADA xmlns="http://www.collada.org/2005/11/COLLADASchema" version="1.4.1">
+  <asset><contributor><author></author><authoring_tool>FBX COLLADA exporter</authoring_tool><comments></comments></contributor><created>2016-09-08T11:34:04Z</created><keywords></keywords><modified>2016-09-08T11:34:04Z</modified><revision></revision><subject></subject><title></title><unit meter="0.001000" name="centimeter"></unit><up_axis>Y_UP</up_axis></asset>
+  <library_geometries>
+    <geometry id="Pyramid001-lib" name="Pyramid001Mesh">
+      <mesh>
+        <source id="Pyramid001-POSITION">
+          <float_array id="Pyramid001-POSITION-array" count="18">
+0.000000 0.000000 20.000000
+-10.000000 -10.000000 0.000000
+10.000000 -10.000000 0.000000
+10.000000 10.000000 0.000000
+-10.000000 10.000000 0.000000
+0.000000 0.000000 0.000000
+</float_array>
+          <technique_common>
+            <accessor source="#Pyramid001-POSITION-array" count="6" stride="3">
+              <param name="X" type="float"/>
+              <param name="Y" type="float"/>
+              <param name="Z" type="float"/>
+            </accessor>
+          </technique_common>
+        </source>
+        <source id="Pyramid001-Normal0">
+          <float_array id="Pyramid001-Normal0-array" count="72">
+0.000000 -0.894427 0.447214
+0.000000 -0.894427 0.447214
+0.000000 -0.894427 0.447214
+0.894427 0.000000 0.447214
+0.894427 0.000000 0.447214
+0.894427 0.000000 0.447214
+0.000000 0.894427 0.447214
+0.000000 0.894427 0.447214
+0.000000 0.894427 0.447214
+-0.894427 0.000000 0.447214
+-0.894427 0.000000 0.447214
+-0.894427 0.000000 0.447214
+0.000000 0.000000 -1.000000
+0.000000 0.000000 -1.000000
+0.000000 0.000000 -1.000000
+0.000000 0.000000 -1.000000
+0.000000 0.000000 -1.000000
+0.000000 0.000000 -1.000000
+0.000000 0.000000 -1.000000
+0.000000 0.000000 -1.000000
+0.000000 0.000000 -1.000000
+0.000000 0.000000 -1.000000
+0.000000 0.000000 -1.000000
+0.000000 0.000000 -1.000000
+</float_array>
+          <technique_common>
+            <accessor source="#Pyramid001-Normal0-array" count="24" stride="3">
+              <param name="X" type="float"/>
+              <param name="Y" type="float"/>
+              <param name="Z" type="float"/>
+            </accessor>
+          </technique_common>
+        </source>
+        <source id="Pyramid001-UV0">
+          <float_array id="Pyramid001-UV0-array" count="22">
+0.500000 1.000000
+0.000000 0.000000
+1.000000 0.000000
+0.000000 0.000000
+1.000000 0.000000
+0.000000 1.000000
+1.000000 1.000000
+1.000000 0.000000
+0.000000 0.000000
+0.500000 0.500000
+0.500000 1.000000
+</float_array>
+          <technique_common>
+            <accessor source="#Pyramid001-UV0-array" count="11" stride="2">
+              <param name="S" type="float"/>
+              <param name="T" type="float"/>
+            </accessor>
+          </technique_common>
+        </source>
+        <vertices id="Pyramid001-VERTEX">
+          <input semantic="POSITION" source="#Pyramid001-POSITION"/>
+        </vertices>
+        <triangles count="8"><input semantic="VERTEX" offset="0" source="#Pyramid001-VERTEX"/><input semantic="NORMAL" offset="1" source="#Pyramid001-Normal0"/><input semantic="TEXCOORD" offset="2" set="0" source="#Pyramid001-UV0"/><p> 0 0 0 1 1 1 2 2 2 0 3 10 2 4 3 3 5 4 0 6 0 3 7 1 4 8 2 0 9 10 4 10 3 1 11 4 1 12 5 5 13 9 2 14 6 2 15 6 5 16 9 3 17 7 3 18 7 5 19 9 4 20 8 4 21 8 5 22 9 1 23 5</p></triangles>
+      </mesh>
+    </geometry>
+  </library_geometries>
+  <library_visual_scenes>
+    <visual_scene id="object 5" name="object 5">
+      <node name="Pyramid001" id="Pyramid001" sid="Pyramid001"><matrix sid="matrix">1.000000 0.000000 0.000000 0.000000 0.000000 0.000000 1.000000 0.005000 0.000000 -1.000000 0.000000 0.000000 0.000000 0.000000 0.000000 1.000000</matrix><instance_geometry url="#Pyramid001-lib"/><extra><technique profile="FCOLLADA"><visibility>1.000000</visibility></technique></extra></node>
+      <extra><technique profile="MAX3D"><frame_rate>30.000000</frame_rate></technique><technique profile="FCOLLADA"><start_time>0.000000</start_time><end_time>3.333333</end_time></technique></extra>
+    </visual_scene>
+  </library_visual_scenes>
+  <scene>
+    <instance_visual_scene url="#object 5"></instance_visual_scene>
+  </scene>
+</COLLADA>
