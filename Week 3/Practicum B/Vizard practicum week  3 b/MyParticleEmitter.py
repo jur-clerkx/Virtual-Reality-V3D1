@@ -192,7 +192,6 @@ class AttractionParticle(Particle):
 				self.direction[0] = (self.target.position[0] - self.position[0])
 				self.direction[1] = (self.target.position[1] - self.position[1])
 				self.direction[2] = (self.target.position[2] - self.position[2])
-				print self.direction
 				#Update the particle parameters.
 				self.position[0] += self.velocity * self.direction[0]
 				self.position[1] += self.velocity * self.direction[1]
@@ -219,16 +218,17 @@ class AttractionParticle(Particle):
 		self.quad.billboard(viz.BILLBOARD_VIEW)
 
 class GravityParticle(Particle):
+	explosionParticles = []
 	def Update(self):
 		"""Updates the particle"""
 		if(self.alive):
 			self.currentLife+=1
 			#check if the particle is still alive. If not disable it.
-			print self.position[1]
 			if self.position[1] < 0:
 				self.currentLife = 0
 				self.alive = False
 				self.quad.visible = False
+				self.explosionParticles.append(ExplosionParticle(self.position))
 			else:
 				#Update the particle parameters.
 				self.position[0] += self.velocity * self.direction[0]
@@ -238,6 +238,10 @@ class GravityParticle(Particle):
 				self.direction[1] = self.direction[1] - 0.005
 				self.quad.setPosition(self.position)
 				self.quad.color( self.color)
+		for expl in self.explosionParticles:
+			expl.Update()
+			if not expl.alive:
+				self.explosionParticles.remove(expl)
 	def Reset(self, particleTexture, position):
 		"""Resets the particle 'birth' parameters"""
 		self.position = position[:]
@@ -246,7 +250,7 @@ class GravityParticle(Particle):
 		self.maxLife = random.randrange(100,200,1)
 		self.alive = True
 		self.quad.texture(particleTexture)
-		self.velocity = random.random()
+		self.velocity = random.random() + 0.1
 		self.direction = [random.random()*0.4-0.2,random.random()*0.2 + 0.4,0]
 		self.quad.visible = True
 		self.quad.setScale(self.size, self.size)
@@ -255,9 +259,33 @@ class GravityParticle(Particle):
 		"""Particle constructor. Creates a texquad in billboard mode"""
 		self.quad = viz.addTexQuad()
 		self.quad.billboard(viz.BILLBOARD_VIEW)
+		
+class ExplosionParticle():
+	position = [0,0,0]
+	alive = True
+	def __init__(self, position):
+		"""Particle constructor. Creates a texquad in billboard mode"""
+		self.position = position
+		self.currentLife = 0
+		self.size = 0.1
+		self.quad = viz.addTexQuad()
+		self.quad.billboard(viz.BILLBOARD_VIEW)
+		self.quad.texture(smokey)
+		self.quad.setPosition(position)
+		self.quad.setScale(self.size, self.size)
+		self.quad.setEuler(0, 0,random.random()*360-180)
+	def Update(self):
+		if self.alive:
+			self.currentLife += 1
+			self.size += 0.005
+			self.quad.setScale(self.size, self.size)
+			if self.currentLife > 1000:
+				self.alive = False
+				self.quad.remove()
 
 # Load texture
 texture = viz.addTexture('particle_alpha.png')
+smokey = viz.addTexture('rookwolk.png')
 #Create the emitter and add a texture
 e = Emitter()
 e.Reset(texture)
