@@ -47,6 +47,7 @@ peugeot = viz.add('Peugeot 207/Peugeot_207.obj')
 peugeot.setPosition(0,0,5)
 peugeot.setScale(0.0015,0.0015,0.0015)
 peugeot.collideBox(density=1, bounce=0.1, friction=0.1)
+peugeot.shininess(80)
 
 #Add object
 ramp = viz.addChild('object 2.fbx')

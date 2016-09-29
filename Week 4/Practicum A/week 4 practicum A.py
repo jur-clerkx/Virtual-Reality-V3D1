@@ -70,7 +70,7 @@ def onMouseMove(e):
 	if selected:
 		pos = selected.getPosition()
 		if viz.key.isDown(viz.KEY_SHIFT_L):
-			selected.translate(pos[0], pos[1] + (e.dy/10), pos[2] + 0)
+			selected.translate(pos[0], pos[1] + (e.dy/15.0), pos[2] + 0)
 		else:
-			selected.translate(pos[0] + (e.dx/10), pos[1], pos[2] + (e.dy/10))
+			selected.translate(pos[0] + (e.dx/15.0), pos[1], pos[2] + (e.dy/15.0))
 viz.callback(viz.MOUSE_MOVE_EVENT,onMouseMove)
