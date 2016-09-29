@@ -12,10 +12,11 @@ viz.collision(viz.ON)
 #Start virtual world
 viz.go (viz.FULLSCREEN)
 
-#Bobcat
-bobcat = viz.add('FinalHigh2.obj')
+#Turn on the physics engine
+viz.phys.enable()#Bobcat
+bobcat = viz.add('Peugeot 207/Peugeot_207.obj')
 bobcat.setPosition(0,0,5)
-bobcat.setEuler(90, 0, 0)
+#bobcat.setEuler(90, 0, 0)
 #bobcat.texture(bobcatText)
 bobcat.shininess(1)
 bobcat.specular( [1, 1, 1] )
@@ -29,7 +30,7 @@ viz.mouse.setVisible(True)
 #Lights
 #Headlight
 headLight = viz.MainView.getHeadLight()
-headLight.disable()
+#headLight.disable()
 
 #Spot
 spotLamp = viz.addChild('object 3.fbx')
@@ -46,3 +47,10 @@ spot.color(1,1,1)
 
 #Add map
 ground = viz.addChild('ground.osgb')
+
+#Add object
+ramp = viz.addChild('object 2.fbx')
+ramp.setScale(0.3,0.015,0.5)
+ramp.setPosition(0,.5,12)
+ramp.setEuler(0,-10,0)
+ramp.color(1,1,0)
