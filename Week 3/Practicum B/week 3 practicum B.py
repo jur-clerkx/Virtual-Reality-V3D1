@@ -71,5 +71,3 @@ fontein.hasparticles()
 laser = viz.add('laser.osg',pos=[-8,0,8])
 laser.hasparticles()
 laser.addAction(spin)
-
-

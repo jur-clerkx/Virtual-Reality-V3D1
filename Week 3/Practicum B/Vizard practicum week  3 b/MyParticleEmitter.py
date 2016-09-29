@@ -75,7 +75,7 @@ class Emitter(viz.EventClass):
 		self.Update()
 
 class BirthRateEmitter(Emitter):
-	spawnRate = 5
+	spawnRate = 100
 	def Reset(self,texture):
 		"""Resets the emitter. Creates new particles"""
 		self.particleTexture = texture
@@ -96,7 +96,7 @@ class BirthRateEmitter(Emitter):
 		if num == 1:
 			self.Update()
 		elif num == 2:
-			p = SmokeParticle()
+			p = RandomParticle()
 			p.Reset(texture, self.position)
 			self.particles.append(p)
 
@@ -287,7 +287,7 @@ class ExplosionParticle():
 texture = viz.addTexture('particle_alpha.png')
 smokey = viz.addTexture('rookwolk.png')
 #Create the emitter and add a texture
-e = Emitter()
+e = BirthRateEmitter()
 e.Reset(texture)
 #Position the viewpoint.
 view = viz.MainView
