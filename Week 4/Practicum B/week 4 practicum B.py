@@ -12,6 +12,13 @@ viz.collision(viz.ON)
 #Start virtual world
 viz.go (viz.FULLSCREEN)
 
+#Bobcat
+bobcat = viz.add('FinalHigh2.obj')
+bobcat.setPosition(0,0,5)
+bobcat.setEuler(90, 0, 0)
+#bobcat.texture(bobcatText)
+bobcat.shininess(1)
+
 #Movement
 tracker = vizcam.addWalkNavigate(moveScale=2.0)
 tracker.setPosition([0,1.8,0])
@@ -40,8 +47,3 @@ spot.color(1,1,1)
 
 #Add map
 ground = viz.addChild('ground.osgb')
-
-#Add object
-kubus = viz.addChild('object 2.fbx')
-kubus.setScale(0.1,0.1,0.1)
-kubus.setPosition(3,0,0)
