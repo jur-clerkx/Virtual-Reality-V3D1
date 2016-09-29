@@ -12,8 +12,17 @@ viz.collision(viz.ON)
 #Start virtual world
 viz.go (viz.FULLSCREEN)
 
+<<<<<<< HEAD
 #Turn on the physics engine
 viz.phys.enable()
+=======
+#Bobcat
+bobcat = viz.add('FinalHigh2.obj')
+bobcat.setPosition(0,0,5)
+bobcat.setEuler(90, 0, 0)
+#bobcat.texture(bobcatText)
+bobcat.shininess(1)
+>>>>>>> 16bc7d2356290277cf707a0002c34782dfe96c6f
 
 #Movement
 tracker = vizcam.addWalkNavigate(moveScale=2.0)
@@ -43,6 +52,7 @@ spot.color(1,1,1)
 
 #Add map
 ground = viz.addChild('ground.osgb')
+<<<<<<< HEAD
 
 #Add object
 ramp = viz.addChild('object 2.fbx')
@@ -50,3 +60,5 @@ ramp.setScale(0.3,0.015,0.5)
 ramp.setPosition(0,.5,12)
 ramp.setEuler(0,-10,0)
 ramp.color(1,1,0)
+=======
+>>>>>>> 16bc7d2356290277cf707a0002c34782dfe96c6f
