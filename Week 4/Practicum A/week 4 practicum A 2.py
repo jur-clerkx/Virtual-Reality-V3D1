@@ -62,6 +62,9 @@ def pick():
 		viz.vertexcolor(viz.RED)
 	else:
 		viz.vertexcolor(viz.BLUE)
+	viz.vertex(linepos.begin)
+	viz.vertex(linepos.end)
+	line = viz.endlayer()
 			
 vizact.onmousedown(viz.MOUSEBUTTON_LEFT, pick)
 
