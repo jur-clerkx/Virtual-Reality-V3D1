@@ -12,6 +12,9 @@ viz.collision(viz.ON)
 #Start virtual world
 viz.go (viz.FULLSCREEN)
 
+#Turn on the physics engine
+viz.phys.enable()
+
 #Movement
 tracker = vizcam.addWalkNavigate(moveScale=2.0)
 tracker.setPosition([0,1.8,0])
@@ -21,7 +24,7 @@ viz.mouse.setVisible(True)
 #Lights
 #Headlight
 headLight = viz.MainView.getHeadLight()
-headLight.disable()
+#headLight.disable()
 
 #Spot
 spotLamp = viz.addChild('object 3.fbx')
@@ -42,6 +45,8 @@ spot.color(1,1,1)
 ground = viz.addChild('ground.osgb')
 
 #Add object
-kubus = viz.addChild('object 2.fbx')
-kubus.setScale(0.1,0.1,0.1)
-kubus.setPosition(3,0,0)
+ramp = viz.addChild('object 2.fbx')
+ramp.setScale(0.3,0.015,0.5)
+ramp.setPosition(0,.5,12)
+ramp.setEuler(0,-10,0)
+ramp.color(1,1,0)
