@@ -56,9 +56,12 @@ def pick():
 		arrow.visible(viz.ON)
 		if object.valid() and object != arrow:
 			arrow.disable(viz.PICKING)
+	linepos = viz.MainWindow.screenToWorld(viz.mouse.getPosition())
+	viz.startlayer(viz.LINES)
+	if object:
+		viz.vertexcolor(viz.RED)
+	else:
+		viz.vertexcolor(viz.BLUE)
 			
 vizact.onmousedown(viz.MOUSEBUTTON_LEFT, pick)
 
-line = viz.MainWindow.screenToWorld(viz.mouse.getPosition())
-print line.begin
-print line.end
