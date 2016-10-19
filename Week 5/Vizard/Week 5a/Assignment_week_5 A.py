@@ -5,7 +5,7 @@ viz.go()
 
 # Create a shader object by loading the vertex shader
 # and fragment shader from the external files.
-shader = viz.addShader(vert = "lightshader.vert",frag = "lightshadertoon.frag")
+shader = viz.addShader(vert = "lightshader.vert",frag = "lightshader.frag")
 
 # Create the light parameters
 # Green lightcolor
@@ -28,6 +28,16 @@ sphere.apply(uniformLightColor)
 # Step 2 Add light position uniform and apply to the sphere
 uniformLightPosition = viz.addUniformFloat('lightPosition', lightPosition)
 sphere.apply(uniformLightPosition)
+
+# Step 3 Add specular light shininess
+uniformShininess = viz.addUniformFloat('shininess', (15.0))
+sphere.apply(uniformShininess)
+
+# Step 4 Add fog vars
+uniformFogStart = viz.addUniformFloat('fogStart', (1.0))
+uniformFogEnd = viz.addUniformFloat('fogEnd', (15.0))
+sphere.apply(uniformFogStart)
+sphere.apply(uniformFogEnd)
 
 # Set sphere settings and attach the shader to it.
 sphere.setPosition(-2.0,2.0,6.0)

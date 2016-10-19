@@ -2,10 +2,14 @@
 	uniform vec4 lightColor;
 	uniform vec4 lightPosition;
 	uniform mat4 osg_ViewMatrix;
+	uniform float shininess;
+	uniform float fogStart;
+	uniform float fogEnd;
 
 	//These varying parameters will be passed to the fragment shader
 	varying vec4 diffuseColor;
 	varying vec4 ambientColor;
+	varying vec4 specularColor;
 
 
 	/*
@@ -40,6 +44,37 @@
 		diffuseColor = diffuseColor * vec4((1 - deltadistance / 100));
 		return diffuseColor;
 	}
+	
+	/*
+	This function calculates the specular color
+	*/
+	vec4 CalculateSpecularColor(
+				vec3 normalInEyeSpace,
+				vec4 vertexInEyeSpace,
+				vec4 lightPositionInEyeSpace,
+				vec4 objectColor,
+				float shininess)
+	{
+		vec3 lightDirection = lightPositionInEyeSpace.xyz - vertexInEyeSpace.xyz;
+		float lightDistance = length(lightDirection);
+		lightDirection = normalize(lightDirection);
+	
+		//The 'eye' is at the vertex projected in eye space.
+		vec3 eyeDirection = normalize(-vertexInEyeSpace.xyz);
+		
+		//The halfvector is the reflection between lightdirection vector and eye vector.
+		vec3 halfVector = normalize(lightDirection + eyeDirection);
+
+		float dotproduct = dot(halfVector, normalInEyeSpace);
+		if (dotproduct < 0) {
+			dotproduct = 0;
+		}
+		dotproduct = pow(dotproduct, shininess);
+		vec4 lightColor = (1,1,1,1);
+		specularColor = lightColor * objectColor * dotproduct;
+		specularColor = specularColor * (1 - lightDistance / 5);
+		return specularColor;
+	}
 
 	void main()
 	{	
@@ -48,11 +83,14 @@
 		//Convert vertex from object coordinate to eye coordinate
 		vec4 vertexInEyeSpace = gl_ModelViewMatrix * gl_Vertex;
 		
+		float fogFactor = (fogEnd - length(vertexInEyeSpace)) / (fogEnd - fogStart);
+		
 		//Lightposition is in world coordinates. It can be converted to eye coordinates by multiplying it with the view matris.
 		vec4 lightPositionInEyeSpace = osg_ViewMatrix * lightPosition;
 		
-		ambientColor = CalculateAmbientColor(gl_FrontMaterial.diffuse , lightColor);
-		diffuseColor = CalculateDiffuseColor(normalinEyeSpace, vertexInEyeSpace, lightPositionInEyeSpace, lightColor, gl_FrontMaterial.diffuse);
+		ambientColor = CalculateAmbientColor(gl_FrontMaterial.diffuse , lightColor);// * fogFactor;
+		diffuseColor = CalculateDiffuseColor(normalinEyeSpace, vertexInEyeSpace, lightPositionInEyeSpace, lightColor, gl_FrontMaterial.diffuse);// * fogFactor;
+		specularColor = CalculateSpecularColor(normalinEyeSpace, vertexInEyeSpace, lightPositionInEyeSpace, gl_FrontMaterial.diffuse, shininess);// * fogFactor;
 		
 		//Converts vertex to final projection space (model viewprojection)
 		gl_Position = ftransform();
